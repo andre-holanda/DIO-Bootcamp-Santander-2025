@@ -1,4 +1,4 @@
-# Bootcamp Santader 2025 DIO
+# Bootcamp Santander 2025 DIO
 
 Esse repositório servirá para armazenar as resolução dos desafios de códigos e de projetos propostos pelo Bootcamp, servirá também para fortalecer a utilização dos comandos e conceitos do GIT
 

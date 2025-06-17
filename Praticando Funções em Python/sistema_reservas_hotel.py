@@ -13,7 +13,12 @@
             Uma mensagem informando quais reservas foram confirmadas e quais foram recusadas.    
 '''
 
+confirmadas = []
+recusadas = []
+
 def processar_reservas():
+    global confirmadas
+    global recusadas
     # Entrada dos quartos disponíveis
     quartos_disponiveis = set(map(int, input().split()))
     
@@ -21,7 +26,12 @@ def processar_reservas():
     reservas_solicitadas = list(map(int, input().split()))
 
     # TODO: Crie o processamento das reservas:
-    
+    for reserva in reservas_solicitadas:
+        if reserva in quartos_disponiveis:
+            quartos_disponiveis.remove(reserva)
+            confirmadas.append(reserva)
+        else:
+            recusadas.append(reserva)
 
     # TODO: Verifique se cada reserva pode ser confirmada com base na disponibilidade dos quartos: 
     

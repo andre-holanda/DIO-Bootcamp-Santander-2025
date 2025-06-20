@@ -17,6 +17,7 @@ eventos = {}
 n = int(input().strip())
 
 # TODO: Crie um loop para armazenar participantes e seus temas:
+# Loop para pegar o nome e o evento dos participantes
 for _ in range(n):
     linha = input().strip()
 
@@ -25,6 +26,7 @@ for _ in range(n):
     participante = linha[:virgula].strip()
     tema = linha[virgula + 1:].strip()
 
+    # condicional que valida se o evento já está cadastro ou não e realiza o cadastro do participante no evento
     if tema in eventos:
         eventos[tema].append(participante)
     else:

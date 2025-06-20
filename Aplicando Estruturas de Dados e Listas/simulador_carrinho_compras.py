@@ -34,6 +34,9 @@ for _ in range(n):
     total += preco
 
 # TODO: Exiba os itens e o total da compra
+# Laço para exibir todos os itens
 for item, preco in carrinho:
     print(f"{item}: R${preco:.2f}")
+
+# Impressão do valor total do carrinho
 print(f"Total: R${total:.2f}")

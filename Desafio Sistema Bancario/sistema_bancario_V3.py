@@ -40,6 +40,7 @@ class Cliente():
     def contas(self):
         return self._contas
 
+    # FIXME: melhorar a visualizar dos dados do cliente.
     def __str__(self):
         return f"{self.__class__.__name__}:\n{','.join([f'{chave}={valor}' for chave, valor in self.__dict__.items()])}"
     
@@ -139,7 +140,7 @@ class Conta():
 
     def depositar(self, valor):
         if valor > 0:
-            self._saldo = valor
+            self._saldo += valor
             print("\nDepósito realizadocom sucesso!")
             return True
         else:
@@ -285,7 +286,7 @@ def exibir_extrato(clientes):
     if not conta:
         return
     
-    print("\n============ EXTRATO ============")
+    print("\n========================= EXTRATO =========================")
     transacoes = conta.historico.transacoes
 
     extrato = ""
@@ -300,7 +301,7 @@ def exibir_extrato(clientes):
     
     print(extrato)
     print(f"\nSaldo: R${conta.saldo:.2f}")
-    print("=================================")
+    print("===========================================================")
 
 def cadastra_cliente(clientes):
     cpf = input("Informe o CPF do cliente (somente números): ")
@@ -339,6 +340,11 @@ def listar_contas(contas):
         print("=" * 50)
         print(str(conta))
 
+def listar_clientes(clientes):
+    for cliente in clientes:
+        print("=" * 50)
+        print(str(cliente))
+
 def menu():
     menu = ''' 
         === Sistema Bancário ===
@@ -375,7 +381,7 @@ def main():
             case 4:
                 cadastra_cliente(clientes)
             case 5:
-                pass
+                listar_clientes(clientes)
             case 6:
                 numero_conta = len(contas) + 1
                 cadastra_conta(numero_conta, clientes, contas)

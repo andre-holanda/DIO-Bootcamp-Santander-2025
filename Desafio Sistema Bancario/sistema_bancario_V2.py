@@ -21,8 +21,10 @@
 
         
 '''
+# Importando a biblioteca time, para registrar a data e o horario da transação
 import time
 
+# menu utilizado no loop infinito para mostrar as opções de funcionalidades para o usuário
 def menu():
     menu = ''' 
         === Sistema Bancário ===
@@ -40,6 +42,7 @@ def menu():
     
     return  input(menu)
 
+# cadastro_cliente função que adiciona um cliente, caso ele não seja cadastrado
 def cadastrar_cliente(clientes, cpf, nome, data_nascimento, endereco):
     if clientes and cpf in clientes:
         print(f"\nCliente (CPF: {cpf}) já cadastrado")
@@ -49,6 +52,7 @@ def cadastrar_cliente(clientes, cpf, nome, data_nascimento, endereco):
 
     return clientes
 
+# listar_clientes função que exibe os dados de todos os clientes cadastrados
 def listar_clientes(clientes, contas):
     if clientes:
         for chave, dados_cli in clientes.items():
@@ -64,6 +68,7 @@ def listar_clientes(clientes, contas):
     else:
         print("Não existe cliente cadastrado.")
 
+# cadastrar_conta função que cadastra uma conta para um cliente previamente cadastrado
 def cadastrar_conta(contas, cpf, clientes):
     if cpf in clientes:
         if contas:
@@ -74,6 +79,7 @@ def cadastrar_conta(contas, cpf, clientes):
     else:
         print(f"\nCPF: {cpf} não cadastrado")
 
+# listar_contas função que exibe todas as contas cadastradas
 def listar_contas(contas):
     if contas:
         for chave, dados in contas.items():
@@ -84,6 +90,7 @@ def listar_contas(contas):
     else:
         print("Não existe cliente cadastrado.")
 
+# deposito função que realiza um depósito
 def deposito(saldo, valor_deposito, extrato, /):
     if valor_deposito > 0:
         saldo += valor_deposito
@@ -94,11 +101,14 @@ def deposito(saldo, valor_deposito, extrato, /):
     
     return saldo, extrato
 
+# saque função que realiza um saque
 def saque(*, saldo, valor_saque, extrato, limite, saques_diarios, ):
+    # condicional que valida a quantidade de saques diários
     if saques_diarios == 0:
             print("Limite de saques diários atingido.\n")
     else:
         
+        # condicional para validar se o valor está dentro do máximo permitido por transação e se tem saldo suficiente
         if valor_saque <= limite:
             if valor_saque <= saldo:
                 saldo -= valor_saque
@@ -113,6 +123,7 @@ def saque(*, saldo, valor_saque, extrato, limite, saques_diarios, ):
             saques_diarios += 1
     return saldo, extrato, saques_diarios
 
+# exibir_extrato função que exibe todas as transações realizadas
 def exibir_extrato(saldo, /, *, extrato):
     if extrato:
         print("\n================ EXTRATO ================")
@@ -123,6 +134,7 @@ def exibir_extrato(saldo, /, *, extrato):
     else:
         print("Nenhum movimentação realizada.\n")
 
+# main função principal do programa
 def main():
     saldo = 0.0
     saques_diarios = 3
@@ -131,8 +143,11 @@ def main():
     clientes = {}
     contas = {}
 
+    # Loop infinito para mostrar o menu
     while True:
         opcao = menu()
+
+        # condicional para validar a escolha do usuário
         if opcao == "9":
             print("Sistema encerrado.")
             break

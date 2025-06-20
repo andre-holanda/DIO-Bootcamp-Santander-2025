@@ -13,6 +13,7 @@ descontos = {
     "SEM_DESCONTO": 0.00
 }
 
+# Loop infinito
 while True:
     preco = float(input("Informe o valor: ").strip())
     cupom = input("Digite o cupom de desconto: ").strip().upper()
@@ -40,9 +41,11 @@ descontos = {
     "SEM_DESCONTO": 0.00
 }
 
+# Solicita do usuário o preço e o cupom de desconto
 preco = float(input().strip())
 cupom = input().strip().upper()
 
+# Condicional que identifica o cupom e realiza o calculo do desconto
 if cupom == "DESCONTO10":
     preco = preco - (preco * descontos["DESCONTO10"])
 elif cupom == "DESCONTO20":
@@ -52,4 +55,5 @@ elif cupom == "SEM_DESCONTO":
 else:
     print("Cupom inválido")
 
+# Imprime na tela o preço com o desconto formatado com duas casas decimais
 print(f"{preco:.2f}")

@@ -30,14 +30,14 @@ while True:
 
 
 ##################### Solução do desafio p/ passar no interpretador #####################
+# Lista com os domínios válidos
 dominios = ['gmail.com', 'outlook.com']
 
-# Entrada do usuário
+# Entrada do usuário, solicita um email para ser validado
 email = input().strip()
 
-dominio = email.split('@')[1]
-
 # TODO: Verifique as regras do e-mail:
+# Condicional que avalia o email e retorna se o email é válido ou não
 if "@" in email:
     dominio = email.split('@')[1]
     if email[0] == "@" or email[-1] == "@":

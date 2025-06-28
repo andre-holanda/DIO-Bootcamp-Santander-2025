@@ -13,7 +13,7 @@
             implemente um iterador personalizado ContaIterador que permita iterar sobre todas as contas do banco, retornando informações básicas de cada conta (número, saldo atual, etc).
 '''
 # Bibliotecas utilizadas
-import datetime
+from datetime import datetime
 from abc import ABC, abstractmethod, abstractproperty
 import functools
 
@@ -151,7 +151,11 @@ class Conta():
         self._historico = Historico()
     
     def __str__(self):
-        return f"{self.__class__.__name__}:\nNúmero: {self.numero}\nAgência: {self.agencia}\nTitular: {self.cliente.nome}\nSaldo Atual: {self.saldo}"
+        return (f"{self.__class__.__name__}:\n"
+        f"Número: {self.numero}\n"
+        f"Agência: {self.agencia}\n"
+        f"Titular: {self.cliente.nome}\n"
+        f"Saldo Atual: {self.saldo}")
 
     @property
     def saldo(self):
@@ -208,7 +212,11 @@ class ContaCorrente(Conta):
         self._limite_saques = LIMITE_SAQUES_PADRAO
     
     def __str__(self):
-        return f"\n{self.__class__.__name__}:\nAgência: {self.agencia}\nC/C: {self.numero}\nTitular: {self.cliente.nome}"
+        return (f"\n{self.__class__.__name__}:\n"
+                f"Agência: {self.agencia}\n"
+                f"C/C: {self.numero}\n"
+                f"Titular: {self.cliente.nome}\n"
+                f"Saldo: {self.saldo}")
 
     @property
     def limite(self):
@@ -260,7 +268,7 @@ class Historico:
             "tipo": transacao.__class__.__name__,
             "valor": transacao.valor,
             #"data": time.strftime('%d/%m/%Y %H:%M:%S'),
-            "data": datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+            "data": datetime.now().strftime('%d/%m/%Y %H:%M:%S')
         })
 
     def gerador_relatorio(self, tipo_transacao=None):
@@ -272,10 +280,11 @@ class Historico:
                     yield f"{transacao['tipo']}: \tR${transacao['valor']:.2f} \t| Data: {transacao['data']}"
     
     def transacoes_do_dia(self):
-        data_atual = datetime.datetime.utcnow().date()
+        data_atual = datetime.today()
+        print(data_atual)
         transacoes = []
         for transacao in self._transacoes:
-            data_transacao = datetime.datetime.strptime(transacao["data"], "%d/%m/%Y %H:%M:%S").date()
+            data_transacao = datetime.strptime(transacao["data"], "%d/%m/%Y %H:%M:%S").date()
             if data_atual == data_transacao:
                 transacoes.append(transacao)
         return transacoes
@@ -325,9 +334,10 @@ class Deposito(Transacao):
 def log_transacao(func):
     @functools.wraps(func)
     def log(*args, **kwargs):
-        print("Início: ", datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S'), func.__name__, "\n")
-        func(*args, **kwargs)
-        print("\nTérmino: ", datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S'), func.__name__)
+        print("Início: ", datetime.now().strftime('%d/%m/%Y %H:%M:%S'), func.__name__, "\n")
+        resultado = func(*args, **kwargs)
+        print("\nTérmino: ", datetime.now().strftime('%d/%m/%Y %H:%M:%S'), func.__name__)
+        return resultado
     return log
 
 # Função filtrar_cliente
@@ -402,8 +412,13 @@ def exibir_extrato(clientes):
         return
     
     print("\n========================= EXTRATO =========================")
+    sem_transacao = False
     for linha in conta.historico.gerador_relatorio(tipo_transacao):
+        sem_transacao = True
         print(linha)
+
+    if not sem_transacao:
+        print("Não teve movimentação")
 
     print(f"\nSaldo: R${conta.saldo:.2f}")
     print("===========================================================")
